@@ -55,6 +55,8 @@ import odoo.helper.ORecordValues;
 import odoo.helper.OdooFields;
 import odoo.helper.utils.gson.OdooRecord;
 import odoo.helper.utils.gson.OdooResult;
+import odoo.listeners.IOdooResponse;
+import odoo.listeners.OdooError;
 
 public class OSyncAdapter extends AbstractThreadedSyncAdapter {
     public static final String TAG = OSyncAdapter.class.getSimpleName();
@@ -132,6 +134,27 @@ public class OSyncAdapter extends AbstractThreadedSyncAdapter {
 
             // Ready for sync data from server
             syncData(mModel, mUser, domain, syncResult, true, true);
+
+            mOdoo.searchRead(
+                    "product.product"
+                    , null
+                    , new ODomain().add("id", "=", "72")
+                    , 0
+                    , 0
+                    , "create_date DESC"
+                    , new IOdooResponse() {
+                        @Override
+                        public void onResponse(OdooResult odooResult) {
+                            Log.d("test", odooResult.toString());
+                        }
+
+                        @Override
+                        public void onError(OdooError odooError) {
+
+                            Log.d("test", odooError.toString());
+                        }
+                    }
+            );
         }
     }
 

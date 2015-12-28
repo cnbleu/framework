@@ -24,6 +24,7 @@
         android:protectionLevel="signature" />
 
     <application
+        android:debuggable="true"
         android:name="com.odoo.App"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
